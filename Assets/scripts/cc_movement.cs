@@ -8,9 +8,6 @@ public class cc_movement : MonoBehaviour
 
     public Transform cameraHolder;
     public CharacterController cc;
-
-    public GameObject wall;
-
     public float MS=10;
     float sens;
     public float gravity=9.81f;
@@ -18,15 +15,13 @@ public class cc_movement : MonoBehaviour
     public float max_jump_height=3;
     float speed_factor;//this is what gives invinite movement if you keep jumping
     public float ms_increase_on_jump =0.005f;
-
     bool cursor_lock_state=true;
-    bool wall_transparency=true;
 // these are changed over time to mimic acceleration and deceleration
-        float zvelocity;
+    float zvelocity;
 // scoped values that i can use in this script if i need to get the -1..1 value of the direction..
-        float zmovement;
-        float hmovement;
-        float vmovement;
+    float zmovement;
+    float hmovement;
+    float vmovement;
 
  //public Animator anim;
 
@@ -60,9 +55,7 @@ public class cc_movement : MonoBehaviour
 
 
         update_acceleration();
-//placeholder maybe removed bc i want infinite possible ms
         limit_velocity();
-
         //same thing but no direction on the new vec method
         Vector3 movedir= transform.forward*(vmovement*(acceleration+speed_factor)) + transform.right*(hmovement*(acceleration+speed_factor)) + transform.up*zvelocity;
         //Vector3 movedir= new Vector3(hmovement,zmovement,vmovement);
@@ -78,15 +71,11 @@ public class cc_movement : MonoBehaviour
     void update_acceleration(){
        if (hmovement !=0 || vmovement!=0){
             acceleration+=0.05f;
-
        }else{
        if (acceleration>=0){ 
         acceleration-=0.05f;
         }
-        
         } 
-
-
     }
 
     void limit_velocity(){
@@ -94,19 +83,14 @@ public class cc_movement : MonoBehaviour
             acceleration=max_accel-0.1f;
         }
     }
-void inputs(){
-     hmovement=Input.GetAxis("Horizontal");
-     vmovement=Input.GetAxis("Vertical");
-     zmovement=Input.GetAxis("Jump");
 
-
-
-    //anim.SetBool("iswalk",true);
-
-}
+    void inputs(){
+        hmovement=Input.GetAxis("Horizontal");
+        vmovement=Input.GetAxis("Vertical");
+        zmovement=Input.GetAxis("Jump");
+    }
 
     void escmenu(){
-
         //to see if we are pressing button
         if(Input.GetButtonDown("esc")){
             if(cursor_lock_state){
@@ -116,12 +100,8 @@ void inputs(){
                 Cursor.lockState=CursorLockMode.None;
                 Cursor.visible=true;
             }
-
-
             cursor_lock_state=!cursor_lock_state;
         }
-
-
     }
 
 
@@ -138,23 +118,9 @@ void inputs(){
         if(currot.x>180) currot.x-=360;
         currot.x=Mathf.Clamp(currot.x,-50,50);
         cameraHolder.localRotation=Quaternion.Euler(currot);
-
     }
 
 
-    void toggle_wall_transparency(){
-
-        if(Input.GetButtonDown("Fire1")){
-            if (wall_transparency){
-                wall_transparency=false;
-                wall.GetComponent<Renderer>().material.SetFloat("_Size", 0.0f);
-            }else{
-                wall_transparency=true;
-                wall.GetComponent<Renderer>().material.SetFloat("_Size", 0.3f);
-            }
-        }
-
-    }
 
 
 
@@ -167,6 +133,5 @@ void inputs(){
         rotate();
         move(); 
         escmenu();
-        toggle_wall_transparency();
     }
 }

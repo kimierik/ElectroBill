@@ -1,9 +1,11 @@
-this is unity project 
+  tarvitset
+   https://git-scm.com/download/win
+   
 
   
-  
-  
-voi ladata zip  
+
+
+
   
   
 git clone https://github.com/kimierik/ElectroBill.git

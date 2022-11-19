@@ -5,17 +5,15 @@ using UnityEngine;
 public class testinteractable : interactable
 {
 
-    public override void change_machine_popup(){
-        ui.change_text_item("obname","i am a washing machine");
-        ui.change_button_item_text("option1"," laita päälle");
-        ui.change_button_item_text("option2"," sammuta");
-    }
-
 
     public override void option1_interact(){
         Debug.Log("option1 testmachine");
+        todo.update_cost(todo.find_item_from_lista("pyykinpesukone"),"lämpötila_23");
+        ui.disable_canvas();
     }
     public override void option2_interact(){
         Debug.Log("option2 testmachine");
+        todo.update_cost(todo.find_item_from_lista("pyykinpesukone"),"lämpötila_20");
+        ui.disable_canvas();
     }
 }

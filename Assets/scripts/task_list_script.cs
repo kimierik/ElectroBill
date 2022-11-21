@@ -48,32 +48,36 @@ public class task_list_script : MonoBehaviour{
     void Start(){
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
+        reset_and_update_tasklist();
+    }
+    
+    void reset_and_update_tasklist(){
         reset_tasklist();
         update_todo_list();
     }
+
+    void update_wattmeter(){
+        reset_and_update_tasklist();
+        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+    }
     
+
     public void update_cost_val(Item task, float value){
         totalcost+=value;
         task.aktiivinen=false;
-        reset_tasklist();
-        update_todo_list();
-        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+        update_wattmeter();
     }
 
     public void update_cost_index(Item task,int index){
         totalcost+=task.get_value_from_index(index-1);
         task.aktiivinen=false;
-        reset_tasklist();
-        update_todo_list();
-        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+        update_wattmeter();
     }
 
     public void update_cost_key(Item task, string option){
         totalcost+=task.valinnat[option];
         task.aktiivinen=false;
-        reset_tasklist();
-        update_todo_list();
-        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+        update_wattmeter();
     }
 
     public Item find_item_from_lista(string item_name){

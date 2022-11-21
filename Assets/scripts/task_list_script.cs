@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
   
 public enum Toiminto {
     Siivous,
@@ -28,6 +29,12 @@ public class Item{
     public string get_txt(){
         return string.Format("{0}: {1},   ",this.toiminto,this.nimi);
     }
+
+    public float get_value_from_index(int index){
+        return valinnat.ElementAt(index).Value;
+    }
+
+
 }
 
 //make someway to update the list. add all prefs in list and change them or reset the entire list
@@ -45,7 +52,23 @@ public class task_list_script : MonoBehaviour{
         update_todo_list();
     }
     
-    public void update_cost(Item task, string option){
+    public void update_cost_val(Item task, float value){
+        totalcost+=value;
+        task.aktiivinen=false;
+        reset_tasklist();
+        update_todo_list();
+        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+    }
+
+    public void update_cost_index(Item task,int index){
+        totalcost+=task.get_value_from_index(index-1);
+        task.aktiivinen=false;
+        reset_tasklist();
+        update_todo_list();
+        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+    }
+
+    public void update_cost_key(Item task, string option){
         totalcost+=task.valinnat[option];
         task.aktiivinen=false;
         reset_tasklist();

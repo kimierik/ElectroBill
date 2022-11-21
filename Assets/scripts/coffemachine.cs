@@ -9,12 +9,12 @@ public class coffemachine : interactable
 
     public override void option1_interact(){
         Debug.Log("option 1 coffemachine");
-        todo.update_cost(todo.find_item_from_lista(tavara.nimi),"keitä_kahvi");
+        todo.update_cost_index(todo.find_item_from_lista(tavara.nimi),1);
         ui.disable_canvas();
     }
     public override void option2_interact(){
         Debug.Log("option2 coffemachine");
-        todo.update_cost(todo.find_item_from_lista(tavara.nimi),"elä keitä kahvi");
+        todo.update_cost_index(todo.find_item_from_lista(tavara.nimi),2);
         ui.disable_canvas();
     }
 }

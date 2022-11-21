@@ -32,7 +32,7 @@ public class Item{
 
 //make someway to update the list. add all prefs in list and change them or reset the entire list
 public class task_list_script : MonoBehaviour{
-    List<Item> lista=new List<Item>();
+    public List<Item> lista=new List<Item>();
     float totalcost;
     public GameObject prefa;
     GameObject list_parent;
@@ -41,8 +41,6 @@ public class task_list_script : MonoBehaviour{
     void Start(){
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
-        lista.Add(new Item(){toiminto=Toiminto.Ruoka, nimi="kahvinkeitin", valinnat=new Dictionary<string,float>(){ {"keitä_kahvi",50f}, {"elä keitä kahvi",0f} }}) ;
-        lista.Add(new Item(){toiminto=Toiminto.Pyykki, nimi="pyykinpesukone", valinnat=new Dictionary<string,float>(){ {"lämpötila_23",30f}, {"lämpötila_20",20f} }}) ;
         reset_tasklist();
         update_todo_list();
     }
@@ -73,7 +71,6 @@ public class task_list_script : MonoBehaviour{
         }
         return count;
     }
-
 
 
     public void update_todo_list(){

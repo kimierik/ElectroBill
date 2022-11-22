@@ -31,9 +31,9 @@ public abstract class interactable : MonoBehaviour
     }
 
     void assign_listeners(){
-        GameObject.Find("close_btn").GetComponent<Button>().onClick.AddListener(ui.disable_canvas);
-        GameObject.Find("option1").GetComponent<Button>().onClick.AddListener(option1_interact);
-        GameObject.Find("option2").GetComponent<Button>().onClick.AddListener(option2_interact);
+        if (GameObject.Find("close_btn")!=null)GameObject.Find("close_btn").GetComponent<Button>().onClick.AddListener(ui.disable_canvas);
+        if (GameObject.Find("option1")!=null)GameObject.Find("option1").GetComponent<Button>().onClick.AddListener(option1_interact);
+        if (GameObject.Find("option2")!=null)GameObject.Find("option2").GetComponent<Button>().onClick.AddListener(option2_interact);
     }
 
     void OnTriggerStay(Collider collisioninfo){
@@ -47,6 +47,12 @@ public abstract class interactable : MonoBehaviour
             }
         }
     }
+
+    public void add_item_option_to_total_value(int index){
+        todo.update_cost_index(todo.find_item_from_lista(tavara.nimi),index);
+        ui.disable_canvas();
+    }
+
 
     public abstract Item tavara {get;}
 

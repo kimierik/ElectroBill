@@ -5,14 +5,16 @@ using UnityEngine;
 public class coffemachine : interactable
 {
 
-    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Siivous, nimi="kahvinkeitin", valinnat=new Dictionary<string,float>(){ {"keitä_kahvi",50f}, {"elä keitä kahvi",0f} }};}}
+    public override void change_machine_popup(){
+        ui.change_text_item("obname","i am a coffee machine");
+        ui.change_button_item_text("option1"," keitä ");
+        ui.change_button_item_text("option2"," elä keitä");
+    }
 
     public override void option1_interact(){
         Debug.Log("option 1 coffemachine");
-        add_item_option_to_total_value(1);
     }
     public override void option2_interact(){
         Debug.Log("option2 coffemachine");
-        add_item_option_to_total_value(2);
     }
 }

@@ -7,45 +7,37 @@
 
 
   
-```bash 
+  
 git clone https://github.com/kimierik/ElectroBill.git
-```
   
-luo tiedoston kansioon jossa olet ja lataa git pohjan siihen. voit siirtyä kansioon " cd ElectroBill " komennolla.
+ladataksesi git pohjan
   
-```bash 
-git checkout -b (nimi)-versio
-``` 
-
+  
+git checkout -b (sukunime-versio)
+  
 luo oman branchin johon voit tehdä muutoksia ja tallentaa niitä ilman että kaikkien muitten versiot muuttuu saman tien
   
   
   
-```bash
-git add . 
-```  
+git add .
+  
 lisää kaikki muokatut tiedot seurantaan
 
 
-```bash
-git commit -m "(patch note)"
-``` 
 
+git commit -m "(patch note)"
+  
 luo patch noten jota pystyme seuraamaan githubista
   
-```bash 
-git push origin (nimi)-versio
-```
+  
+git push origin (sukunimi-versio)
   
 puskee muokatut tiedostot github pohjaan
 
 
 
 JOS OLET TEKEMÄSSÄ MUUTOKSIA, JA POHJASI EI OLE SAMALLA VERSIOLLA KUIN GITHUB VERSIO
-  
-```bash
 git pull
-```
   
 
 voit kysyä aina kimiltä  

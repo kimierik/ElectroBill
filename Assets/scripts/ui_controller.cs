@@ -10,51 +10,30 @@ public class ui_controller : MonoBehaviour
 
     public Canvas asd;
     public player_interact_script player;
-    Text uitext;
+    public GameObject parent_container;
 
     void Start(){
+        parent_container=GameObject.Find("popup_ui_parent");
         GameObject tmp = GameObject.Find("popup");
         asd=tmp.GetComponent<Canvas>();
-        asd.GetComponent<Canvas>().enabled=false;
+    }
+
+    public void clear_ui(){
+        foreach ( Transform child in parent_container.transform){
+            GameObject.Destroy(child.gameObject);
+        }
     }
    
     public void enable_canvas(){
         Cursor.lockState=CursorLockMode.None;
         Cursor.visible=true;
-        asd.GetComponent<Canvas>().enabled=true;
     }
 
     public void disable_canvas(){
         Cursor.lockState=CursorLockMode.Locked;
         Cursor.visible=false;
-        asd.GetComponent<Canvas>().enabled=false;
+        clear_ui();
     }
-
-
-
-
-    public void change_text_item(string item_name, string itemvalue){
-        for (int i=0;i<asd.transform.childCount;i++){
-            GameObject child = asd.gameObject.transform.GetChild(i).gameObject;
-            if (child.name ==item_name){
-                uitext=child.GetComponent<Text>();
-                uitext.text=itemvalue;
-            }
-        }
-    }
-
-    public void change_button_item_text(string button_name,string newname){
-        for (int i=0;i<asd.transform.childCount;i++){
-            GameObject child = asd.gameObject.transform.GetChild(i).gameObject;
-            if (child.name ==button_name){
-                uitext=child.transform.GetChild(0).GetComponent<Text>();
-                uitext.text=newname;
-            }
-        }
-    }
-
-  
-
 
     public void option1_select(){
         player.currently_interacting.GetComponent<interactable>().option1_interact();

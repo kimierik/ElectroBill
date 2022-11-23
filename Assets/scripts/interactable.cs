@@ -24,10 +24,12 @@ public abstract class interactable : MonoBehaviour
     }
 
     public void interact_action(){
-        ui.clear_ui();
-        spawn_pref();
-        assign_listeners();
-        ui.enable_canvas();
+        if (todo.find_item_from_lista(tavara.nimi).aktiivinen){
+            ui.clear_ui();
+            spawn_pref();
+            assign_listeners();
+            ui.enable_canvas();
+        }
     }
 
     void assign_listeners(){

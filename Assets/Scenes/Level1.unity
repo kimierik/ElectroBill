@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 0}
   todo: {fileID: 0}
-  UI_PREFAB: {fileID: 2288836233976085966, guid: 9e66de88c6524e943b3b7e1987d07377, type: 3}
+  UI_PREFAB: {fileID: 238086153986935086, guid: c79788607bea8eb41afd2e0e4ed6e85c, type: 3}
 --- !u!65 &42705888
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3321,7 +3321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ui: {fileID: 0}
   todo: {fileID: 0}
-  UI_PREFAB: {fileID: 2288836233976085966, guid: 9e66de88c6524e943b3b7e1987d07377, type: 3}
+  UI_PREFAB: {fileID: 5153856861689622818, guid: 29dbd76ccc16822449803ff5f3c6d8d7, type: 3}
 --- !u!65 &1222919797
 BoxCollider:
   m_ObjectHideFlags: 0

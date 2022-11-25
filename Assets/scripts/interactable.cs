@@ -32,7 +32,7 @@ public abstract class interactable : MonoBehaviour
         }
     }
 
-    void assign_listeners(){
+    public void assign_listeners(){
         if (GameObject.Find("close_btn")!=null)GameObject.Find("close_btn").GetComponent<Button>().onClick.AddListener(ui.disable_canvas);
         if (GameObject.Find("option1")!=null)GameObject.Find("option1").GetComponent<Button>().onClick.AddListener(option1_interact);
         if (GameObject.Find("option2")!=null)GameObject.Find("option2").GetComponent<Button>().onClick.AddListener(option2_interact);

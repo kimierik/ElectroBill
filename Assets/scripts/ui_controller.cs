@@ -11,6 +11,7 @@ public class ui_controller : MonoBehaviour
     public Canvas asd;
     public player_interact_script player;
     public GameObject parent_container;
+    public GameObject FYI_popup_prefab;
 
     void Start(){
         parent_container=GameObject.Find("popup_ui_parent");
@@ -28,6 +29,15 @@ public class ui_controller : MonoBehaviour
         Cursor.lockState=CursorLockMode.None;
         Cursor.visible=true;
     }
+
+    public void instantiate_FYI_popup(string fyi_text){
+        enable_canvas();
+        var thing =Instantiate(FYI_popup_prefab,new Vector3(0,0,0),Quaternion.identity);
+        thing.transform.SetParent(parent_container.transform,false);
+        GameObject.Find("fyi_info").GetComponent<Text>().text=fyi_text;
+
+    }
+
 
     public void disable_canvas(){
         Cursor.lockState=CursorLockMode.Locked;

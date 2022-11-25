@@ -48,8 +48,12 @@ public class task_list_script : MonoBehaviour{
     void Start(){
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
-        reset_and_update_tasklist();
     }
+    void Update(){
+        reset_and_update_tasklist();
+
+    }
+
     
     void reset_and_update_tasklist(){
         reset_tasklist();

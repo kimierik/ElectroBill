@@ -22,6 +22,15 @@ public abstract class interactable : MonoBehaviour
         var thing =Instantiate(UI_PREFAB,new Vector3(0,0,0),Quaternion.identity);
         thing.transform.SetParent(ui.parent_container.transform,false);
     }
+    
+    public void spawn_fyi_prefab(){
+        ui.enable_canvas();
+        var thing = Instantiate(ui.FYI_popup_prefab,new Vector3(0,0,0),Quaternion.identity);
+        thing.transform.SetParent(ui.parent_container.transform,false);
+        GameObject.Find("fyi_info").GetComponent<Text>().text=tieto_plajays;
+        Invoke("assign_listeners",0.1f);
+    } 
+    
 
     public void interact_action(){
         if (todo.find_item_from_lista(tavara.nimi).aktiivinen){
@@ -53,10 +62,13 @@ public abstract class interactable : MonoBehaviour
     public void add_item_option_to_total_value(int index){
         todo.update_cost_index(todo.find_item_from_lista(tavara.nimi),index);
         ui.disable_canvas();
+        //annetaan hetki aikaa viime ikkunalle despawnaa
+        Invoke("spawn_fyi_prefab",0.1f);
     }
 
 
     public abstract Item tavara {get;}
+    public abstract string tieto_plajays {get;}
 
     public abstract void option1_interact();
     public abstract void option2_interact();

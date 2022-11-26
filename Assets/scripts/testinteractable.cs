@@ -6,6 +6,9 @@ public class testinteractable : interactable
 {
 
     public override Item tavara{get{ return new Item(){toiminto=Toiminto.Pyykki, nimi="pyykinpesukone", valinnat=new Dictionary<string,float>(){ {"lämpötila_23",50f}, {"lämpötila_20",20f} }};}}
+    
+
+    public override string tieto_plajays {get{return "didyou know pesukone";}} 
 
     public override void option1_interact(){
         Debug.Log("option1 testmachine");

@@ -37,7 +37,6 @@ public class Item{
 
 }
 
-//make someway to update the list. add all prefs in list and change them or reset the entire list
 public class task_list_script : MonoBehaviour{
     public List<Item> lista=new List<Item>();
     float totalcost;
@@ -63,7 +62,7 @@ public class task_list_script : MonoBehaviour{
         wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
     }
     
-
+    //3 eri tapaa päivittää totalcost. käytä mitä haluat.
     public void update_cost_val(Item task, float value){
         totalcost+=value;
         task.aktiivinen=false;
@@ -91,6 +90,7 @@ public class task_list_script : MonoBehaviour{
         return null;
     }
 
+    //monta aktiivista toimintoa on listassa
     public int get_number_of_toiminto(Toiminto etsitty){
         int count=0;
         for (int i =0; i<lista.Count;i++){

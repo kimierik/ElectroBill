@@ -18,6 +18,7 @@ public abstract class interactable : MonoBehaviour
         todo.lista.Add(tavara);
     }
 
+    // koneen oma User interface
     public void spawn_pref(){
         var thing =Instantiate(UI_PREFAB,new Vector3(0,0,0),Quaternion.identity);
         thing.transform.SetParent(ui.parent_container.transform,false);

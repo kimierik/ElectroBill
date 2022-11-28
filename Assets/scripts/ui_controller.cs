@@ -8,15 +8,12 @@ using UnityEngine.UI;
 public class ui_controller : MonoBehaviour
 {
 
-    public Canvas asd;
     public player_interact_script player;
     public GameObject parent_container;
     public GameObject FYI_popup_prefab;
 
     void Start(){
         parent_container=GameObject.Find("popup_ui_parent");
-        GameObject tmp = GameObject.Find("popup");
-        asd=tmp.GetComponent<Canvas>();
     }
 
     public void clear_ui(){

@@ -5,7 +5,10 @@ using UnityEngine;
 public class coffemachine : interactable
 {
 
-    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Siivous, nimi="kahvinkeitin", valinnat=new Dictionary<string,float>(){ {"keitä_kahvi",50f}, {"elä keitä kahvi",0f} }};}}
+    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Ruoka, nimi="kahvinkeitin", valinnat=new Dictionary<string,float>(){ {"keitä_kahvi",50f}, {"elä keitä kahvi",0f} }};}}
+
+    
+    public override string tieto_plajays {get{return "did you know kahvikone";}} 
 
     public override void option1_interact(){
         Debug.Log("option 1 coffemachine");

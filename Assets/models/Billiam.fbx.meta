@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 2c79f48b2b591b14a9b3d632227249b4
+guid: 83dfd2df7ca312449888920d3230af7b
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
       74: -1422011007694221501
-    second: heilutaL
+    second: walk_anim
   - first:
-      74: -347655941897588504
-    second: heiluta
+      74: 3853834593160295502
+    second: idleanim
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -39,11 +39,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: heiluta
+      name: walk_anim
       takeName: Armature|ArmatureAction.001
       internalID: 0
-      firstFrame: 0
-      lastFrame: 90
+      firstFrame: 2.6
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -68,18 +68,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: heilutaL
+      name: idleanim
       takeName: Armature|ArmatureAction.001
       internalID: 0
       firstFrame: 0
-      lastFrame: 90
+      lastFrame: 0.10000001
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0

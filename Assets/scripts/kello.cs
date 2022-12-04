@@ -9,6 +9,7 @@ public class kello : MonoBehaviour
     public TMP_Text aika;
     public GameObject UI;
     public GameObject gameover;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -35,8 +36,10 @@ public class kello : MonoBehaviour
 
         }
 
-        // Kun p‰iv‰ p‰‰ttyy, shit happens
+        // Kun p‰iv‰ p‰‰ttyy, shit (gg-ui) happens
         gameover.SetActive(true);
         UI.SetActive(false);
+        player.GetComponent<Chill_charactercontroler>().enabled = false;
+
     }
 }

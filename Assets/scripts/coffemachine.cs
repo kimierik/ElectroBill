@@ -11,7 +11,7 @@ public class coffemachine : interactable
     public override string tieto_plajays {get{return "did you know kahvikone";}} 
 
     public override void option1_interact(){
-        Debug.Log("option 1 coffemachine");
+        Debug.Log("5 wattia");
         add_item_option_to_total_value(1);
     }
     public override void option2_interact(){

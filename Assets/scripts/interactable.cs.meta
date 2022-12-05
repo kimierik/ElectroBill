@@ -3,7 +3,11 @@ guid: db5dc909528f2034a9b76d1ff26303ac
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - ui: {instanceID: 0}
+  - todo: {instanceID: 0}
+  - UI_PREFAB: {instanceID: 0}
+  - playercontrolleri: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -13,6 +13,7 @@ public class Chill_charactercontroler : MonoBehaviour
     float sens=2;
 
     public GameObject cam;
+    public Animator billian_animator;
 
     void Start() {
         cc=gameObject.GetComponent<CharacterController>();
@@ -24,6 +25,18 @@ public class Chill_charactercontroler : MonoBehaviour
         handle_inputs();
         handle_movement();
         handle_rotate();
+
+        handle_animation();
+    }
+
+
+    void handle_animation(){
+        if (forward_movement==0){
+            billian_animator.SetBool("Is_walking",false);
+        }else{
+
+            billian_animator.SetBool("Is_walking",true);
+        }
     }
     
     void handle_movement(){

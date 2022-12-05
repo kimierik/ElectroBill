@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using TMPro;
   
 public enum Toiminto {
     Siivous,
@@ -33,22 +34,27 @@ public class Item{
     public float get_value_from_index(int index){
         return valinnat.ElementAt(index).Value;
     }
-
-
 }
 
-public class task_list_script : MonoBehaviour{
+public class task_list_script : porssisahko {
     public List<Item> lista=new List<Item>();
-    float totalcost;
+    float kulutus;
+    float veloitus;
     public GameObject prefa;
     GameObject list_parent;
     Text wattmeter;
+    public TMP_Text finalkulutus;
+    public TMP_Text finalsumma;
+    public TMP_Text completed;
 
     void Start(){
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
+
+        update_wattmeter();
         //unity lataa gameobjektit eri tahtiin joten kutsuaan hetken kuluttua
         Invoke("reset_and_update_tasklist",0.1f);
+        init_sahkotaulu();
     }
 
     
@@ -59,24 +65,36 @@ public class task_list_script : MonoBehaviour{
 
     void update_wattmeter(){
         reset_and_update_tasklist();
-        wattmeter.text=string.Format("wattage used : {0} kwh", totalcost) ;
+        wattmeter.text=string.Format("wattage used : {0} kwh", kulutus);
+        // Suoritettavien toimintojen määrä tason läpäisyyn
+        int goal = 2;
+        // Jos kaikki toiminnot on tehty, kenttä on läpäisty
+        if (lista.Count == goal)
+        {
+            completed.text = "Taso 1 suoritettu";
+        }
     }
     
     //3 eri tapaa päivittää totalcost. käytä mitä haluat.
     public void update_cost_val(Item task, float value){
-        totalcost+=value;
+        kulutus+=value;
         task.aktiivinen=false;
         update_wattmeter();
     }
 
+
+    // Tämä käytössä!
     public void update_cost_index(Item task,int index){
-        totalcost+=task.get_value_from_index(index-1);
+        kulutus+=task.get_value_from_index(index-1);
+        veloitus += task.get_value_from_index(index - 1) * hinta;
+        finalkulutus.text = kulutus.ToString();
+        finalsumma.text = veloitus.ToString();
         task.aktiivinen=false;
         update_wattmeter();
     }
 
     public void update_cost_key(Item task, string option){
-        totalcost+=task.valinnat[option];
+        kulutus+=task.valinnat[option];
         task.aktiivinen=false;
         update_wattmeter();
     }

@@ -7,27 +7,52 @@ using System.Linq;
 public class porssisahko : MonoBehaviour
 
 {
-    public TMP_Text aika2;
+    public TMP_Text hinta_taulu_text;
+    public kello aikalaskija;
     public float hinta = 0;
+    public Dictionary<string,float> hinta_taulu=new Dictionary<string,float>(){
+            {"7",0.3013f},
+            {"8",0.33f},
+            {"9",0.341f},
+            {"10",0.33f},
+            {"11",0.3629f},
+            {"12",0.363f},
+            {"13",0.363f},
+            {"14",0.3701f},
+            {"15",0.4279f},
+            {"16",0.4391f},
+            {"17",0.495f},
+            {"18",0.4391f},
+            {"19",0.4495f},
+            {"20",0.3964f},
+            {"21",0.3856f},
+        };
 
     // Start is called before the first frame update
-    void Start()
+    public void init_sahkotaulu()
     {
+        string fulltxt="";
+        for (int i =0;i<hinta_taulu.Count;i++){
+            fulltxt+=string.Format("{0}:00  {1}\n ",hinta_taulu.ElementAt(i).Key,hinta_taulu.ElementAt(i).Value );
+        }
+        hinta_taulu_text.text=fulltxt;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Hinta päivittyy joka frame vai olisiko parempi jos se päivittyy aina silloin kun taski on tehty?
-        // Tällöin siirrä funktion kutsu Updaten sijaan -> task_list_script.cs update_cost_index -funktioon!
+        // Hinta pï¿½ivittyy joka frame vai olisiko parempi jos se pï¿½ivittyy aina silloin kun taski on tehty?
+        // Tï¿½llï¿½in siirrï¿½ funktion kutsu Updaten sijaan -> task_list_script.cs update_cost_index -funktioon!
         ElectrcityPrice();
     }
 
     public void ElectrcityPrice()
     {
-        string tunti = aika2.text;
+        //string tunti = aika2.text;
+        hinta = hinta_taulu[aikalaskija.aika_tunti.ToString()];
         
-        // Sähkön hinta tunneittain euroina 3.12.2022
+        // Sï¿½hkï¿½n hinta tunneittain euroina 3.12.2022
+        /*
         switch (tunti)
         {
             case "7:00":
@@ -78,5 +103,6 @@ public class porssisahko : MonoBehaviour
 
         }
 
+        */
     }
 }

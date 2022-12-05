@@ -6,10 +6,12 @@ using TMPro;
 
 public class kello : MonoBehaviour
 {
-    public TMP_Text aika;
+    public TMP_Text aika_text;
     public GameObject UI;
     public GameObject gameover;
     public GameObject player;
+    public int aika_tunti=16;
+    int aika_minuutti=0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,27 +20,33 @@ public class kello : MonoBehaviour
         StartCoroutine(Kello());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     IEnumerator Kello()
     {
-        // Laskuri, joka pyörittää kelloa eteenpäin
-        // i= milloin päivä alkaa, i< mihin aikaan päivä päättyy
+        // Laskuri, joka pyï¿½rittï¿½ï¿½ kelloa eteenpï¿½in
+        // i= milloin pï¿½ivï¿½ alkaa, i< mihin aikaan pï¿½ivï¿½ pï¿½ï¿½ttyy
         // Tunnin pituus kellossa on waitforseconds(ARVO)
-        for (int i=7; i<22; i++)
-        {
-            aika.text = i + ":00";
-            yield return new WaitForSeconds(1);
 
+        
+        
+        while (aika_tunti < 17){
+            aika_text.text=string.Format("{0}:{1:00}",aika_tunti,aika_minuutti);
+            aika_minuutti++;
+            if (aika_minuutti==60){
+                aika_minuutti=0;
+                aika_tunti++;
+            }
+            yield return new WaitForSeconds(1);
         }
 
-        // Kun päivä päättyy, shit (gg-ui) happens
+
+        
+
+
+        // Kun pï¿½ivï¿½ pï¿½ï¿½ttyy, shit (gg-ui) happens
         gameover.SetActive(true);
         UI.SetActive(false);
+        GameObject.Find("popup").SetActive(false);
         player.GetComponent<Chill_charactercontroler>().enabled = false;
 
     }

@@ -35,7 +35,6 @@ public class ui_controller : MonoBehaviour
 
     }
 
-
     public void disable_canvas(){
         Cursor.lockState=CursorLockMode.Locked;
         Cursor.visible=false;

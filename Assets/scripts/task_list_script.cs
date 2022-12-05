@@ -34,8 +34,6 @@ public class Item{
     public float get_value_from_index(int index){
         return valinnat.ElementAt(index).Value;
     }
-
-
 }
 
 public class task_list_script : porssisahko {
@@ -52,9 +50,11 @@ public class task_list_script : porssisahko {
     void Start(){
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
+
+        update_wattmeter();
         //unity lataa gameobjektit eri tahtiin joten kutsuaan hetken kuluttua
         Invoke("reset_and_update_tasklist",0.1f);
-        Debug.Log(lista.Count);
+        init_sahkotaulu();
     }
 
     
@@ -86,7 +86,7 @@ public class task_list_script : porssisahko {
     // Tämä käytössä!
     public void update_cost_index(Item task,int index){
         kulutus+=task.get_value_from_index(index-1);
-        veloitus = task.get_value_from_index(index - 1) * hinta;
+        veloitus += task.get_value_from_index(index - 1) * hinta;
         finalkulutus.text = kulutus.ToString();
         finalsumma.text = veloitus.ToString();
         task.aktiivinen=false;

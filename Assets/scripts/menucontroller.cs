@@ -10,6 +10,7 @@ public class menucontroller : MonoBehaviour
     public Button startgame;
     public TMP_InputField nimi;
     public Button exitbtn;
+    public string PlayerName;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +28,9 @@ public class menucontroller : MonoBehaviour
     void LevelOneLoader()
     {
         SceneManager.LoadScene("Level1", LoadSceneMode.Single);
-        //Pelaajan nimi playername-muuttujassa!!
-        string playername = nimi.text.ToString();
-        Debug.Log(playername);
+        //Pelaajan nimi PlayerName-muuttujassa!!
+        string name = nimi.text.ToString();
+        PlayerPrefs.SetString(PlayerName, name);
     }
 
     void Yeet()

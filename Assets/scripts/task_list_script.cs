@@ -155,7 +155,7 @@ public class task_list_script : porssisahko {
             GameObject.Destroy(child.gameObject);
         }
     }
-    //debug code
+    //Debug code
     public void update_tasklist(){
         int x_offset=100;
         int y_offset=20;

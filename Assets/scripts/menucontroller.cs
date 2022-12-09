@@ -14,6 +14,8 @@ public class menucontroller : MonoBehaviour
     public string PlayerName;
     public TMP_Text scoreboard;
     string url = "172.30.139.31/unity/manage_request.php";
+    static string[] banned={"TABLE","table",";",":","DROP","drop"};
+    List<string> banned_naming_convention= new List<string>(banned);
 
     // Start is called before the first frame update
     void Start()
@@ -23,16 +25,21 @@ public class menucontroller : MonoBehaviour
         StartCoroutine(SendGR());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
+    bool string_is_sanitized(string input){
+        for(int i=0;i<banned_naming_convention.Count;i++){
+            if (input.Contains(banned_naming_convention[i])) {
+                return false;
+            }
+        }
+        return true;
+    }    
+
 
     void LevelOneLoader()
     {
         string name = nimi.text.ToString();
-        if (name != "Kirjoita nimi" && name != "") {
+        if (name != "Kirjoita nimi" && name != "" && string_is_sanitized(name)) {
             SceneManager.LoadScene("Level1", LoadSceneMode.Single);
             //Pelaajan nimi PlayerName-muuttujassa!!
             PlayerPrefs.SetString(PlayerName, name);

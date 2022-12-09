@@ -31,7 +31,7 @@ public class kello : MonoBehaviour
         
         while (aika_tunti < 17){
             aika_text.text=string.Format("{0}:{1:00}",aika_tunti,aika_minuutti);
-            aika_minuutti++;
+            aika_minuutti+=2;
             if (aika_minuutti==60){
                 aika_minuutti=0;
                 aika_tunti++;
@@ -47,7 +47,9 @@ public class kello : MonoBehaviour
         gameover.SetActive(true);
         UI.SetActive(false);
         GameObject.Find("popup").SetActive(false);
-        player.GetComponent<Chill_charactercontroler>().enabled = false;
+        //player.GetComponent<Chill_charactercontroler>().enabled = false;
+        player.GetComponent<Chill_charactercontroler>().game_over = true;
+
 
     }
 }

@@ -33,7 +33,7 @@ public class porssisahko : MonoBehaviour
     {
         string fulltxt="";
         for (int i =0;i<hinta_taulu.Count;i++){
-            fulltxt+=string.Format("{0}:00  {1}\n ",hinta_taulu.ElementAt(i).Key,hinta_taulu.ElementAt(i).Value );
+            fulltxt+=string.Format("{0}:00  {1} €/kwh\n ",hinta_taulu.ElementAt(i).Key,hinta_taulu.ElementAt(i).Value );
         }
         hinta_taulu_text.text=fulltxt;
     }
@@ -52,57 +52,5 @@ public class porssisahko : MonoBehaviour
         hinta = hinta_taulu[aikalaskija.aika_tunti.ToString()];
         
         // S�hk�n hinta tunneittain euroina 3.12.2022
-        /*
-        switch (tunti)
-        {
-            case "7:00":
-                hinta = 0.3013f;
-                break;
-            case "8:00":
-                hinta = 0.33f;
-                break;
-            case "9:00":
-                hinta = 0.341f;
-                break;
-            case "10:00":
-                hinta = 0.33f;
-                break;
-            case "11:00":
-                hinta = 0.3629f;
-                break;
-            case "12:00":
-                hinta = 0.363f;
-                break;
-            case "13:00":
-                hinta = 0.363f;
-                break;
-            case "14:00":
-                hinta = 0.3701f;
-                break;
-            case "15:00":
-                hinta = 0.4279f;
-                break;
-            case "16:00":
-                hinta = 0.4391f;
-                break;
-            case "17:00":
-                hinta = 0.495f;
-                break;
-            case "18:00":
-                hinta = 0.4391f;
-                break;
-            case "19:00":
-                hinta = 0.4495f;
-                break;
-            case "20:00":
-                hinta = 0.3964f;
-                break;
-            case "21:00":
-                hinta = 0.3856f;
-                break;
-
-        }
-
-        */
     }
 }

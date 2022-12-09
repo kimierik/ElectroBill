@@ -11,6 +11,8 @@ public enum Toiminto {
     Tiskays,
     Pyykki,
     Ruoka,
+    Valaistus,
+    Viihde,
 };
 
 public class Item{
@@ -34,12 +36,16 @@ public class Item{
     public float get_value_from_index(int index){
         return valinnat.ElementAt(index).Value;
     }
+
+    public string get_key_from_index(int index){
+        return valinnat.ElementAt(index).Key;
+    }
 }
 
 public class task_list_script : porssisahko {
     public List<Item> lista=new List<Item>();
-    float kulutus;
-    float veloitus;
+    float kulutus=0.0f;
+    float veloitus=0.0f;
     public GameObject prefa;
     GameObject list_parent;
     Text wattmeter;
@@ -67,11 +73,14 @@ public class task_list_script : porssisahko {
         reset_and_update_tasklist();
         wattmeter.text=string.Format("wattage used : {0} kwh", kulutus);
         // Suoritettavien toimintojen määrä tason läpäisyyn
-        int goal = 2;
-        // Jos kaikki toiminnot on tehty, kenttä on läpäisty
-        if (lista.Count == goal)
+        finalkulutus.text = string.Format("{0} kwh used",kulutus.ToString()); 
+        finalsumma.text = string.Format("{0} € used " , veloitus.ToString());
+
+        int goal = 3;
+        if (get_total_number_of_aktiivinen_toiminto()<= goal)
         {
             completed.text = "Taso 1 suoritettu";
+            aikalaskija.player.GetComponent<Chill_charactercontroler>().is_win = true;
         }
     }
     
@@ -87,8 +96,6 @@ public class task_list_script : porssisahko {
     public void update_cost_index(Item task,int index){
         kulutus+=task.get_value_from_index(index-1);
         veloitus += task.get_value_from_index(index - 1) * hinta;
-        finalkulutus.text = kulutus.ToString();
-        finalsumma.text = veloitus.ToString();
         task.aktiivinen=false;
         update_wattmeter();
     }
@@ -106,6 +113,17 @@ public class task_list_script : porssisahko {
             }
         }
         return null;
+    }
+
+
+    public int get_total_number_of_aktiivinen_toiminto(){
+        int count=0;
+        for (int i =0; i<lista.Count;i++){
+            if (lista[i].aktiivinen){
+                count++;
+            }
+        }
+        return count;
     }
 
     //monta aktiivista toimintoa on listassa

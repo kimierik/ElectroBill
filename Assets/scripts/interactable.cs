@@ -22,6 +22,7 @@ public abstract class interactable : MonoBehaviour
     public void spawn_pref(){
         var thing =Instantiate(UI_PREFAB,new Vector3(0,0,0),Quaternion.identity);
         thing.transform.SetParent(ui.parent_container.transform,false);
+        Invoke("assign_ui_info",0.01f);
     }
     
     public void spawn_fyi_prefab(){
@@ -37,7 +38,7 @@ public abstract class interactable : MonoBehaviour
         if (todo.find_item_from_lista(tavara.nimi).aktiivinen){
             ui.clear_ui();
             spawn_pref();
-            assign_listeners();
+            Invoke("assign_listeners",0.1f);
             ui.enable_canvas();
         }
     }
@@ -48,10 +49,19 @@ public abstract class interactable : MonoBehaviour
         if (GameObject.Find("option2")!=null)GameObject.Find("option2").GetComponent<Button>().onClick.AddListener(option2_interact);
     }
 
+    public void assign_ui_info(){
+
+        if (GameObject.Find("option1")!=null)GameObject.Find("option1").transform.GetChild(0).GetComponent<Text>().text=tavara.get_key_from_index(0);
+        if (GameObject.Find("option2")!=null)GameObject.Find("option2").transform.GetChild(0).GetComponent<Text>().text=tavara.get_key_from_index(1);
+        if (GameObject.Find("flavor")!=null)GameObject.Find("flavor").GetComponent<Text>().text=tavara.nimi;
+    }
+
+
     void OnTriggerStay(Collider collisioninfo){
         player_interact_script player = collisioninfo.gameObject.GetComponent<player_interact_script>();
         if (player !=null){
             if (player.pressed){
+                ui.clear_ui();
                 //tell the player that it is currently interacting with this interactable
                 player.currently_interacting=this.gameObject;
                 interact_action();

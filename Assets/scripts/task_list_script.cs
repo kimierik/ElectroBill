@@ -6,12 +6,11 @@ using System.Linq;
 using TMPro;
   
 public enum Toiminto {
-    Siivous,
     Lämmitys,
     Tiskays,
     Pyykki,
-    Ruoka,
     Valaistus,
+    Hygienia,
     Viihde,
 };
 
@@ -73,11 +72,11 @@ public class task_list_script : porssisahko {
         reset_and_update_tasklist();
         wattmeter.text=string.Format("wattage used : {0} kwh", kulutus);
         // Suoritettavien toimintojen määrä tason läpäisyyn
-        finalkulutus.text = string.Format("{0} kwh used",kulutus.ToString()); 
-        finalsumma.text = string.Format("{0} € used " , veloitus.ToString());
+        finalkulutus.text = string.Format("{0} kwh",kulutus.ToString()); 
+        finalsumma.text = string.Format("{0} €" , veloitus.ToString());
 
-        int goal = 3;
-        if (get_total_number_of_aktiivinen_toiminto()<= goal)
+        int goal = 6;
+        if (get_total_number_of_aktiivinen_toiminto() == goal)
         {
             completed.text = "Taso 1 suoritettu";
             aikalaskija.player.GetComponent<Chill_charactercontroler>().is_win = true;
@@ -121,6 +120,7 @@ public class task_list_script : porssisahko {
         for (int i =0; i<lista.Count;i++){
             if (lista[i].aktiivinen){
                 count++;
+                Debug.Log(count);
             }
         }
         return count;

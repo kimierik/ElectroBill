@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class suihku_machine : interactable
 {
-    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Siivous, nimi="suihku", valinnat=new Dictionary<string,float>(){ {"lämmin suihku",2.1f}, {"viileä suihku",1.4f} }};}}
+    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Hygienia, nimi="suihku", valinnat=new Dictionary<string,float>(){ {"Lämmin suihku",2.1f}, {"Viileä suihku",1.4f} }};}}
     
     public override string tieto_plajays {get{return " Tietoisku: 10 astetta viileämpi suihkuvesi voi säästää jopa 33% energiaa.";}} 
 

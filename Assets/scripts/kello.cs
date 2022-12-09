@@ -31,7 +31,7 @@ public class kello : MonoBehaviour
         
         while (aika_tunti < 17){
             aika_text.text=string.Format("{0}:{1:00}",aika_tunti,aika_minuutti);
-            aika_minuutti+=2;
+            aika_minuutti+=1;
             if (aika_minuutti==60){
                 aika_minuutti=0;
                 aika_tunti++;

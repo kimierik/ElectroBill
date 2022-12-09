@@ -57,9 +57,9 @@ public class task_list_script : porssisahko {
         list_parent= GameObject.Find("todolist_parent");
         wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
 
-        update_wattmeter();
         //unity lataa gameobjektit eri tahtiin joten kutsuaan hetken kuluttua
         Invoke("reset_and_update_tasklist",0.1f);
+        Invoke("update_wattmeter",0.1f);
         init_sahkotaulu();
     }
 

@@ -9,12 +9,23 @@ public abstract class interactable : MonoBehaviour
     public ui_controller ui;
     public task_list_script todo;
     public GameObject UI_PREFAB;
+    public AudioSource pelaaja_audio_source;
+
+    public AudioClip Info_text;
+    public AudioClip Billiam_flavor;
+    public AudioClip entry_sound;
+
+
 
     void Start(){
         //find and set ui item
         todo= GameObject.Find("world_manager").GetComponent<task_list_script>();
         GameObject tmp= GameObject.Find("world_manager");
         ui=tmp.GetComponent<ui_controller>();
+        pelaaja_audio_source=GameObject.Find("Player").GetComponent<AudioSource>();
+        //Debug.Log(pelaaja_audio_source);
+
+
         todo.lista.Add(tavara);
     }
 
@@ -23,6 +34,11 @@ public abstract class interactable : MonoBehaviour
         var thing =Instantiate(UI_PREFAB,new Vector3(0,0,0),Quaternion.identity);
         thing.transform.SetParent(ui.parent_container.transform,false);
         Invoke("assign_ui_info",0.01f);
+    }
+
+    void close_fyitext_prefab(){
+        pelaaja_audio_source.PlayOneShot(Billiam_flavor, 0.5f);
+        ui.disable_canvas();
     }
     
     public void spawn_fyi_prefab(){
@@ -36,6 +52,7 @@ public abstract class interactable : MonoBehaviour
 
     public void interact_action(){
         if (todo.find_item_from_lista(tavara.nimi).aktiivinen){
+            pelaaja_audio_source.PlayOneShot(entry_sound, 0.5f);
             ui.clear_ui();
             spawn_pref();
             Invoke("assign_listeners",0.1f);
@@ -47,6 +64,7 @@ public abstract class interactable : MonoBehaviour
         if (GameObject.Find("close_btn")!=null)GameObject.Find("close_btn").GetComponent<Button>().onClick.AddListener(ui.disable_canvas);
         if (GameObject.Find("option1")!=null)GameObject.Find("option1").GetComponent<Button>().onClick.AddListener(option1_interact);
         if (GameObject.Find("option2")!=null)GameObject.Find("option2").GetComponent<Button>().onClick.AddListener(option2_interact);
+        if (GameObject.Find("close_btn_f")!=null)GameObject.Find("close_btn_f").GetComponent<Button>().onClick.AddListener(close_fyitext_prefab);
     }
 
     public void assign_ui_info(){
@@ -75,6 +93,8 @@ public abstract class interactable : MonoBehaviour
         ui.disable_canvas();
         //annetaan hetki aikaa viime ikkunalle despawnaa
         Invoke("spawn_fyi_prefab",0.1f);
+        pelaaja_audio_source.PlayOneShot(Info_text, 0.5f);
+
     }
 
 

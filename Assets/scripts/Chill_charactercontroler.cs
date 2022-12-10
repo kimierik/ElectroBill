@@ -75,4 +75,5 @@ public class Chill_charactercontroler : MonoBehaviour
         transform.Rotate(0,hrot*sens,0);
     }
 
+ 
 }

@@ -26,8 +26,6 @@ public class button_hover_sprite_change : MonoBehaviour //IPointerExitHandler, I
        onhover_sprite=Sprite.Create(onhover,new Rect(0,0,onhover.width,onhover.height) ,new Vector3(1f,1f,1f),100f);
        normal_sprite=Sprite.Create(normal,new Rect(0,0,normal.width,normal.height) ,new Vector3(1f,1f,1f),100f);
 
-       Debug.Log(onhover);
-       Debug.Log(normal);
     }
 
 

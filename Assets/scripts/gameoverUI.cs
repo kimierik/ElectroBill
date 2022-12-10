@@ -17,11 +17,11 @@ public class gameoverUI : MonoBehaviour
     void Start()
     {
         restartbtn.onClick.AddListener(LevelOneLoader);
-        Debug.Log("LevelOneLoader addded");
+        //Debug.Log("LevelOneLoader addded");
         menubtn.onClick.AddListener(ReturnToMenu);
-        Debug.Log("ReturnToMenu addded");
+        //Debug.Log("ReturnToMenu addded");
         // StartCoroutine(SendGR());
-        Debug.Log("Start SendGR");
+        //Debug.Log("Start SendGR");
     }
 
     void LevelOneLoader()

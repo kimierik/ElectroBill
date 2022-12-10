@@ -48,6 +48,12 @@ public abstract class interactable : MonoBehaviour
         GameObject.Find("fyi_info").GetComponent<Text>().text=tieto_plajays;
         Invoke("assign_listeners",0.1f);
     } 
+
+    void kill_children(){
+        foreach ( Transform child in gameObject.transform){
+            GameObject.Destroy(child.gameObject);
+        }
+    }
     
 
     public void interact_action(){
@@ -89,6 +95,7 @@ public abstract class interactable : MonoBehaviour
     }
 
     public void add_item_option_to_total_value(int index){
+        kill_children();
         todo.update_cost_index(todo.find_item_from_lista(tavara.nimi),index);
         ui.disable_canvas();
         //annetaan hetki aikaa viime ikkunalle despawnaa

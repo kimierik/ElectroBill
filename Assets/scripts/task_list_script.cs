@@ -81,11 +81,12 @@ public class task_list_script : porssisahko
         finalkulutus.text = string.Format("{0} kwh", kulutus.ToString());
         finalsumma.text = string.Format("{0} €", veloitus.ToString());
         // Suoritettavien toimintojen määrä tason läpäisyyn
-        int goal = 5;
+        int goal = 1;
         if (get_total_number_of_aktiivinen_toiminto() == goal)
         {
             completed.text = "Taso 1 suoritettu";
             aikalaskija.player.GetComponent<Chill_charactercontroler>().is_win = true;
+            Debug.Log("endis near");
             StartCoroutine(SendPR());
         }
     }
@@ -136,7 +137,7 @@ public class task_list_script : porssisahko
             if (lista[i].aktiivinen)
             {
                 count++;
-                Debug.Log(count);
+                //Debug.Log(count);
             }
         }
         return count;
@@ -198,7 +199,7 @@ public class task_list_script : porssisahko
     {
         string user = PlayerPrefs.GetString(PlayerName);
         string points = veloitus.ToString();
-        Debug.Log(user + points);
+        //Debug.Log(user + points);
         WWWForm form = new WWWForm();
         form.AddField("unitypost", "asdf");
         form.AddField("username", user);

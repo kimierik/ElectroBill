@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Networking;
 
 
 public class kello : MonoBehaviour
@@ -12,6 +13,8 @@ public class kello : MonoBehaviour
     public GameObject player;
     public int aika_tunti=16;
     int aika_minuutti=0;
+    public TMP_Text scoreboard;
+    string url = "172.30.139.31/unity/manage_request.php";
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +52,30 @@ public class kello : MonoBehaviour
         GameObject.Find("popup").SetActive(false);
         //player.GetComponent<Chill_charactercontroler>().enabled = false;
         player.GetComponent<Chill_charactercontroler>().game_over = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        // Ladataan Scoreboard tässä koska gameoverUI:ssä se ei toimi (varmaan koska canvas ensin deaktivoituu ja sitten aktivoidaan uudestaan emt)
+        StartCoroutine(SendGR());
 
+        IEnumerator SendGR()
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(url + "/?unityget="))
+            {
 
+                Debug.Log("Using UnityWebRequest");
+                yield return www.SendWebRequest();
+
+                if (www.isNetworkError || www.isHttpError)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string responseText = www.downloadHandler.text;
+                    scoreboard.text = responseText;
+                    Debug.Log(responseText);
+                }
+            }
+        }
     }
 }

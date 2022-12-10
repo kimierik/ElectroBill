@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 using TMPro;
-  
+using UnityEngine.Networking;
+
 public enum Toiminto {
-    Siivous,
     Lämmitys,
     Tiskays,
     Pyykki,
-    Ruoka,
     Valaistus,
+    Hygienia,
     Viihde,
 };
 
@@ -42,73 +42,85 @@ public class Item{
     }
 }
 
-public class task_list_script : porssisahko {
-    public List<Item> lista=new List<Item>();
-    float kulutus=0.0f;
-    float veloitus=0.0f;
+public class task_list_script : porssisahko
+{
+    public List<Item> lista = new List<Item>();
+    float kulutus = 0.0f;
+    float veloitus = 0.0f;
     public GameObject prefa;
     GameObject list_parent;
     Text wattmeter;
     public TMP_Text finalkulutus;
     public TMP_Text finalsumma;
     public TMP_Text completed;
+    public string PlayerName;
+    string url = "172.30.139.31/unity/manage_request.php";
 
-    void Start(){
-        list_parent= GameObject.Find("todolist_parent");
-        wattmeter=GameObject.Find("wattmeter").GetComponent<Text>();
+    void Start()
+    {
+        list_parent = GameObject.Find("todolist_parent");
+        wattmeter = GameObject.Find("wattmeter").GetComponent<Text>();
 
         //unity lataa gameobjektit eri tahtiin joten kutsuaan hetken kuluttua
-        Invoke("reset_and_update_tasklist",0.1f);
-        Invoke("update_wattmeter",0.1f);
+        Invoke("reset_and_update_tasklist", 0.1f);
+        Invoke("update_wattmeter", 0.1f);
         init_sahkotaulu();
     }
 
-    
-    void reset_and_update_tasklist(){
+
+    void reset_and_update_tasklist()
+    {
         reset_tasklist();
         update_todo_list();
     }
 
-    void update_wattmeter(){
+    void update_wattmeter()
+    {
         reset_and_update_tasklist();
-        wattmeter.text=string.Format("wattage used : {0} kwh", kulutus);
+        wattmeter.text = string.Format("wattage used : {0} kwh", kulutus);
+        finalkulutus.text = string.Format("{0} kwh", kulutus.ToString());
+        finalsumma.text = string.Format("{0} €", veloitus.ToString());
         // Suoritettavien toimintojen määrä tason läpäisyyn
-        finalkulutus.text = string.Format("{0} kwh used",kulutus.ToString()); 
-        finalsumma.text = string.Format("{0} € used " , veloitus.ToString());
-
-        int goal = 3;
-        if (get_total_number_of_aktiivinen_toiminto()<= goal)
+        int goal = 5;
+        if (get_total_number_of_aktiivinen_toiminto() == goal)
         {
             completed.text = "Taso 1 suoritettu";
             aikalaskija.player.GetComponent<Chill_charactercontroler>().is_win = true;
+            StartCoroutine(SendPR());
         }
     }
-    
+
     //3 eri tapaa päivittää totalcost. käytä mitä haluat.
-    public void update_cost_val(Item task, float value){
-        kulutus+=value;
-        task.aktiivinen=false;
+    public void update_cost_val(Item task, float value)
+    {
+        kulutus += value;
+        task.aktiivinen = false;
         update_wattmeter();
     }
 
 
     // Tämä käytössä!
-    public void update_cost_index(Item task,int index){
-        kulutus+=task.get_value_from_index(index-1);
+    public void update_cost_index(Item task, int index)
+    {
+        kulutus += task.get_value_from_index(index - 1);
         veloitus += task.get_value_from_index(index - 1) * hinta;
-        task.aktiivinen=false;
+        task.aktiivinen = false;
         update_wattmeter();
     }
 
-    public void update_cost_key(Item task, string option){
-        kulutus+=task.valinnat[option];
-        task.aktiivinen=false;
+    public void update_cost_key(Item task, string option)
+    {
+        kulutus += task.valinnat[option];
+        task.aktiivinen = false;
         update_wattmeter();
     }
 
-    public Item find_item_from_lista(string item_name){
-        for (int i =0; i<lista.Count;i++){
-            if (lista[i].nimi==item_name){
+    public Item find_item_from_lista(string item_name)
+    {
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].nimi == item_name)
+            {
                 return lista[i];
             }
         }
@@ -116,21 +128,28 @@ public class task_list_script : porssisahko {
     }
 
 
-    public int get_total_number_of_aktiivinen_toiminto(){
-        int count=0;
-        for (int i =0; i<lista.Count;i++){
-            if (lista[i].aktiivinen){
+    public int get_total_number_of_aktiivinen_toiminto()
+    {
+        int count = 0;
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].aktiivinen)
+            {
                 count++;
+                Debug.Log(count);
             }
         }
         return count;
     }
 
     //monta aktiivista toimintoa on listassa
-    public int get_number_of_toiminto(Toiminto etsitty){
-        int count=0;
-        for (int i =0; i<lista.Count;i++){
-            if (lista[i].aktiivinen && lista[i].toiminto==etsitty){
+    public int get_number_of_toiminto(Toiminto etsitty)
+    {
+        int count = 0;
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].aktiivinen && lista[i].toiminto == etsitty)
+            {
                 count++;
             }
         }
@@ -138,33 +157,62 @@ public class task_list_script : porssisahko {
     }
 
 
-    public void update_todo_list(){
-        int i=0;
-        int x_offset=100;
-        int y_offset=20;
-        foreach(Toiminto toim in System.Enum.GetValues(typeof(Toiminto))){
-            var thing =Instantiate(prefa,new Vector3(x_offset,-120-y_offset*i,0),Quaternion.identity);
-            thing.GetComponent<Text>().text= string.Format("{0} : {1} ",toim,get_number_of_toiminto(toim));
-            thing.transform.SetParent(list_parent.transform,false);
+    public void update_todo_list()
+    {
+        int i = 0;
+        int x_offset = 100;
+        int y_offset = 20;
+        foreach (Toiminto toim in System.Enum.GetValues(typeof(Toiminto)))
+        {
+            var thing = Instantiate(prefa, new Vector3(x_offset, -120 - y_offset * i, 0), Quaternion.identity);
+            thing.GetComponent<Text>().text = string.Format("{0} : {1} ", toim, get_number_of_toiminto(toim));
+            thing.transform.SetParent(list_parent.transform, false);
             i++;
         }
     }
 
-    void reset_tasklist(){
-        foreach ( Transform child in list_parent.transform){
+    void reset_tasklist()
+    {
+        foreach (Transform child in list_parent.transform)
+        {
             GameObject.Destroy(child.gameObject);
         }
     }
     //Debug code
-    public void update_tasklist(){
-        int x_offset=100;
-        int y_offset=20;
-        for (int i =0; i<lista.Count;i++){
-            if (lista[i].aktiivinen==true){
-                var thing =Instantiate(prefa,new Vector3(x_offset,-120-y_offset*i,0),Quaternion.identity);
-                thing.GetComponent<Text>().text=lista[i].get_txt();
-                thing.transform.SetParent(list_parent.transform,false);
+    public void update_tasklist()
+    {
+        int x_offset = 100;
+        int y_offset = 20;
+        for (int i = 0; i < lista.Count; i++)
+        {
+            if (lista[i].aktiivinen == true)
+            {
+                var thing = Instantiate(prefa, new Vector3(x_offset, -120 - y_offset * i, 0), Quaternion.identity);
+                thing.GetComponent<Text>().text = lista[i].get_txt();
+                thing.transform.SetParent(list_parent.transform, false);
             }
+        }
+    }
+
+    IEnumerator SendPR()
+    {
+        string user = PlayerPrefs.GetString(PlayerName);
+        string points = veloitus.ToString();
+        Debug.Log(user + points);
+        WWWForm form = new WWWForm();
+        form.AddField("unitypost", "asdf");
+        form.AddField("username", user);
+        form.AddField("player_score", points);
+        using (UnityWebRequest www = UnityWebRequest.Post(url, form))
+        {
+            www.downloadHandler = new DownloadHandlerBuffer();
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError)
+            {
+                Debug.Log(www.error);
+            }
+
         }
     }
 }

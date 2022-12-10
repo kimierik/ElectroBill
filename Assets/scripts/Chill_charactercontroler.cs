@@ -22,6 +22,7 @@ public class Chill_charactercontroler : MonoBehaviour
     void Start() {
         cc=gameObject.GetComponent<CharacterController>();
         billiam_charactermodel= GameObject.Find("Celebration_Bili");
+   
         Cursor.lockState=CursorLockMode.Locked;
         Cursor.visible=false;
     }
@@ -74,4 +75,5 @@ public class Chill_charactercontroler : MonoBehaviour
         transform.Rotate(0,hrot*sens,0);
     }
 
+ 
 }

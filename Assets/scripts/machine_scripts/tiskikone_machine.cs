@@ -5,7 +5,7 @@ using UnityEngine;
 public class tiskikone_machine : interactable
 {
 
-    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Tiskays, nimi="tiskikone", valinnat=new Dictionary<string,float>(){ {"50 asteen ohjelma",0.8f}, {"40 asteen ohjelma ",0.4f} }};}}
+    public override Item tavara{get{ return new Item(){toiminto=Toiminto.Tiskaus, nimi="tiskikone", valinnat=new Dictionary<string,float>(){ {"50 asteen ohjelma",0.8f}, {"40 asteen ohjelma ",0.4f} }};}}
     
     public override string tieto_plajays {get{return "Tietoisku: 10 asteen pesulämpötilan lasku voi säästää jopa 50% energiaa";}} 
 

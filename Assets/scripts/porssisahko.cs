@@ -11,15 +11,6 @@ public class porssisahko : MonoBehaviour
     public kello aikalaskija;
     public float hinta = 0;
     public Dictionary<string,float> hinta_taulu=new Dictionary<string,float>(){
-            {"7",0.3013f},
-            {"8",0.33f},
-            {"9",0.341f},
-            {"10",0.33f},
-            {"11",0.3629f},
-            {"12",0.363f},
-            {"13",0.363f},
-            {"14",0.3701f},
-            {"15",0.4279f},
             {"16",0.4391f},
             {"17",0.495f},
             {"18",0.4391f},
@@ -33,7 +24,7 @@ public class porssisahko : MonoBehaviour
     {
         string fulltxt="";
         for (int i =0;i<hinta_taulu.Count;i++){
-            fulltxt+=string.Format("{0}:00  {1} €/kwh\n ",hinta_taulu.ElementAt(i).Key,hinta_taulu.ElementAt(i).Value );
+            fulltxt+=string.Format("{0}:00  {1} €/kwh\n",hinta_taulu.ElementAt(i).Key,hinta_taulu.ElementAt(i).Value );
         }
         hinta_taulu_text.text=fulltxt;
     }

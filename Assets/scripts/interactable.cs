@@ -14,6 +14,7 @@ public abstract class interactable : MonoBehaviour
     public AudioClip Info_text;
     public AudioClip Billiam_flavor;
     public AudioClip entry_sound;
+    public float volyymi = 0.5f;
 
 
 
@@ -45,7 +46,7 @@ public abstract class interactable : MonoBehaviour
         ui.enable_canvas();
         var thing = Instantiate(ui.FYI_popup_prefab,new Vector3(0,0,0),Quaternion.identity);
         thing.transform.SetParent(ui.parent_container.transform,false);
-        GameObject.Find("fyi_info").GetComponent<Text>().text=tieto_plajays;
+        if (GameObject.Find("fyi_info") != null) GameObject.Find("fyi_info").GetComponent<Text>().text=tieto_plajays;
         Invoke("assign_listeners",0.1f);
     } 
 
@@ -58,7 +59,7 @@ public abstract class interactable : MonoBehaviour
 
     public void interact_action(){
         if (todo.find_item_from_lista(tavara.nimi).aktiivinen){
-            pelaaja_audio_source.PlayOneShot(entry_sound, 0.5f);
+            pelaaja_audio_source.PlayOneShot(entry_sound, volyymi);
             ui.clear_ui();
             spawn_pref();
             Invoke("assign_listeners",0.1f);

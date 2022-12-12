@@ -8,7 +8,7 @@ using UnityEngine.Networking;
 
 public enum Toiminto {
     Lämmitys,
-    Tiskays,
+    Tiskaus,
     Pyykki,
     Valaistus,
     Hygienia,
@@ -77,17 +77,18 @@ public class task_list_script : porssisahko
     void update_wattmeter()
     {
         reset_and_update_tasklist();
-        wattmeter.text = string.Format("wattage used : {0} kwh", kulutus);
+        wattmeter.text = string.Format("{0} kwh", kulutus);
         finalkulutus.text = string.Format("{0} kwh", kulutus.ToString());
-        finalsumma.text = string.Format("{0} €", veloitus.ToString());
+        finalsumma.text = string.Format("{0:0.00} €", veloitus) ;
         // Suoritettavien toimintojen määrä tason läpäisyyn
-        int goal = 1;
+        int goal = 0;
         if (get_total_number_of_aktiivinen_toiminto() == goal)
         {
             completed.text = "Taso 1 suoritettu";
             aikalaskija.player.GetComponent<Chill_charactercontroler>().is_win = true;
             Debug.Log("endis near");
             StartCoroutine(SendPR());
+            aikalaskija.EndGame();
         }
     }
 
@@ -198,7 +199,7 @@ public class task_list_script : porssisahko
     IEnumerator SendPR()
     {
         string user = PlayerPrefs.GetString(PlayerName);
-        string points = veloitus.ToString();
+        string points = string.Format("{0:0.00}", veloitus);
         //Debug.Log(user + points);
         WWWForm form = new WWWForm();
         form.AddField("unitypost", "asdf");
@@ -214,6 +215,8 @@ public class task_list_script : porssisahko
                 Debug.Log(www.error);
             }
 
+            Debug.Log(www.downloadHandler.text);
+            Debug.Log(points);
         }
     }
 }

@@ -30,22 +30,46 @@ public class kello : MonoBehaviour
         // i= milloin p�iv� alkaa, i< mihin aikaan p�iv� p��ttyy
         // Tunnin pituus kellossa on waitforseconds(ARVO)
 
-        
-        
-        while (aika_tunti < 17){
-            aika_text.text=string.Format("{0}:{1:00}",aika_tunti,aika_minuutti);
-            aika_minuutti+=1;
-            if (aika_minuutti==60){
-                aika_minuutti=0;
+
+
+        while (aika_tunti < 22)
+        {
+            aika_text.text = string.Format("{0}:{1:00}", aika_tunti, aika_minuutti);
+            aika_minuutti += 2;
+            if (aika_minuutti == 60)
+            {
+                aika_minuutti = 0;
                 aika_tunti++;
             }
             yield return new WaitForSeconds(1);
         }
 
+        EndGame();
+    }
 
-        
+    IEnumerator SendGR()
+    {
+        using (UnityWebRequest www = UnityWebRequest.Get(url + "/?unityget="))
+        {
 
+            Debug.Log("Using UnityWebRequest");
+            yield return www.SendWebRequest();
 
+            if (www.isNetworkError || www.isHttpError)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string responseText = www.downloadHandler.text;
+                scoreboard.text = responseText;
+                Debug.Log(responseText);
+            }
+        }
+    }
+
+    public void EndGame()
+    {
         // Kun p�iv� p��ttyy, shit (gg-ui) happens
         gameover.SetActive(true);
         UI.SetActive(false);
@@ -55,27 +79,13 @@ public class kello : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         // Ladataan Scoreboard tässä koska gameoverUI:ssä se ei toimi (varmaan koska canvas ensin deaktivoituu ja sitten aktivoidaan uudestaan emt)
+        Invoke("GRWrapper", 0.5f);
+    }
+
+    void GRWrapper()
+    {
         StartCoroutine(SendGR());
 
-        IEnumerator SendGR()
-        {
-            using (UnityWebRequest www = UnityWebRequest.Get(url + "/?unityget="))
-            {
-
-                Debug.Log("Using UnityWebRequest");
-                yield return www.SendWebRequest();
-
-                if (www.isNetworkError || www.isHttpError)
-                {
-                    Debug.Log(www.error);
-                }
-                else
-                {
-                    string responseText = www.downloadHandler.text;
-                    scoreboard.text = responseText;
-                    Debug.Log(responseText);
-                }
-            }
-        }
     }
+    
 }

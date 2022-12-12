@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 using TMPro;
 using UnityEngine.Networking;
+using System.Globalization;
 
 public enum Toiminto {
     Lämmitys,
@@ -199,7 +200,7 @@ public class task_list_script : porssisahko
     IEnumerator SendPR()
     {
         string user = PlayerPrefs.GetString(PlayerName);
-        string points = string.Format("{0:0.00}", veloitus);
+        string points = string.Format(new CultureInfo("en-EN"), "{0:0.00}", veloitus);
         //Debug.Log(user + points);
         WWWForm form = new WWWForm();
         form.AddField("unitypost", "asdf");
